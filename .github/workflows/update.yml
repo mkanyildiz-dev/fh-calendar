@@ -1,0 +1,21 @@
+name: Update CIS Calendar
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # jede Stunde
+  workflow_dispatch:
+
+jobs:
+  update-calendar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download calendar from CIS
+        run: |
+          curl -L "https://cis.technikum-wien.at/cis/private/lvplan/stpl_kalender.php?type=student&pers_uid=wi25m025&begin=1770159600&ende=1785535200&format=ical&version=1&target=ical" -o calendar.ics
+      - name: Commit updated calendar
+        run: |
+          git config --global user.name "calendar-bot"
+          git config --global user.email "calendar@bot.com"
+          git add calendar.ics
+          git commit -m "update calendar" || echo "no changes"
+          git push
