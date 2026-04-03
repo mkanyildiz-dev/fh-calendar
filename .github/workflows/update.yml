@@ -2,7 +2,7 @@ name: Update CIS Calendar
 
 on:
   schedule:
-    - cron: '0 * * * *'  # jede Stunde
+    - cron: '5 * * * *'  # jede Stunde
   workflow_dispatch:
 
 jobs:
